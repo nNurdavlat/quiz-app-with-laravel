@@ -12,6 +12,7 @@ Route::get('/take-quiz',[QuizController::class,'takeQuiz'])->middleware('auth')-
 
 // DASHBOARD
 Route::get('/dashboard',[DashboardController::class,'home'])->middleware('auth')->name('dashboard');
+Route::get('/quizzes',[DashboardController::class,'quiz'])->middleware('auth')->name('quiz');
 Route::get('/statistics',[DashboardController::class,'statistics'])->middleware('auth')->name('statistics');
 
 

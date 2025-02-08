@@ -1,4 +1,4 @@
-<x-header></x-header>
+<x-main.header></x-main.header>
 <body class="bg-gradient-to-b from-gray-50 to-gray-100">
 <nav class="bg-white shadow-lg">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,5 +227,4 @@
         });
     </script>
 </main>
-</body>
-</html>
+<x-main.footer></x-main.footer>

@@ -194,5 +194,4 @@
         mobileMenu.classList.toggle('hidden');
     });
 </script>
-</body>
-</html>
+<x-main.footer></x-main.footer>

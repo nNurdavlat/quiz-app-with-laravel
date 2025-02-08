@@ -212,5 +212,4 @@
         }
     });
 </script>
-</body>
-</html>
+<x-main.footer></x-main.footer>

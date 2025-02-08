@@ -1,4 +1,4 @@
-<x-header></x-header>
+<x-main.header></x-main.header>
 <body class="bg-gray-100">
 <div class="flex min-h-screen">
     <!-- Sidebar -->
@@ -139,4 +139,4 @@
         </main>
     </div>
 </div>
-<x-footer></x-footer>
+<x-main.footer></x-main.footer>

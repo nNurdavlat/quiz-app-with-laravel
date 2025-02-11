@@ -31,6 +31,7 @@
                 <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
+        <a class="text-blue-400" href="{{ route('register') }}">Sign </a>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))

@@ -8,16 +8,16 @@
         </div>
     </div>
     <nav class="flex-grow p-4">
-        <a href="{{ route('dashboard.home') }}" class="block p-3 mb-2 text-gray-800 bg-gray-100 rounded-lg">
+        <a href="{{ route('dashboard.home') }}" class="block p-3 mb-2 text-gray-800 {{ Route::is('dashboard.home') ? 'bg-gray-100' : 'hover:bg-gray-100' }} rounded-lg">
             <i class="fas fa-home mr-2"></i> Dashboard
         </a>
-        <a href="{{ route('dashboard.quizzes') }}" class="block p-3 mb-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="{{ route('dashboard.quizzes') }}" class="block p-3 mb-2 text-gray-600 {{ Route::is('dashboard.quizzes') ? 'bg-gray-100' : 'hover:bg-gray-100' }} rounded-lg">
             <i class="fas fa-book mr-2"></i> My Quizzes
         </a>
-        <a href="{{ route('dashboard.create-quiz') }}" class="block p-3 mb-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="{{ route('dashboard.create-quiz') }}" class="block p-3 mb-2 text-gray-600 {{ Route::is('dashboard.create-quiz') ? 'bg-gray-100' : 'hover:bg-gray-100' }} rounded-lg">
             <i class="fas fa-plus mr-2"></i> Create Quiz
         </a>
-        <a href="{{ route('dashboard.statistics') }}" class="block p-3 mb-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="{{ route('dashboard.statistics') }}" class="block p-3 mb-2 text-gray-600 {{ Route::is('dashboard.statistics') ? 'bg-gray-100' : 'hover:bg-gray-100' }} rounded-lg">
             <i class="fas fa-chart-bar mr-2"></i> Statistics
         </a>
     </nav>

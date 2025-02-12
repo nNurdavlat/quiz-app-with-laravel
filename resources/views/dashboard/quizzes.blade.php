@@ -51,49 +51,58 @@
             <!-- Quiz Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Quiz Card 1 -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="text-lg font-semibold">Basic Mathematics</h3>
-                            <p class="text-gray-500 text-sm">Mathematics</p>
+                @foreach($quizzes as $quiz)
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold">{{ $quiz->title }}</h3>
+                                <p class="text-gray-500 text-sm">Mathematics</p>
+                            </div>
+                            <div class="dropdown">
+                                <button class="p-2 hover:bg-gray-100 rounded-full">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="dropdown">
-                            <button class="p-2 hover:bg-gray-100 rounded-full">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
-                                </svg>
-                            </button>
+                        <p class="text-gray-600 mb-4">{{ $quiz->description }}</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500">{{ $quiz->questions_count }} Questions</span>
+                            <span class="text-sm text-gray-500">{{ $quiz->time_limit  }} minutes</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <span class="text-sm text-gray-500">75% Completion Rate</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
+                            <button class="text-green-600 hover:text-green-800">View Results</button>
+                            <button
+                                class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
+                                onclick="share('{{ $quiz->slug }}')"
+                            >Share</button>
+                            <button class="text-red-600 hover:text-red-800">Delete</button>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">Test basic arithmetic and algebraic concepts</p>
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-sm text-gray-500">10 Questions</span>
-                        <span class="text-sm text-gray-500">15 minutes</span>
-                    </div>
-                    <div class="mb-4">
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
-                        </div>
-                        <span class="text-sm text-gray-500">75% Completion Rate</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
-                        <button class="text-green-600 hover:text-green-800">View Results</button>
-                        <button class="text-red-600 hover:text-red-800">Delete</button>
-                    </div>
-                </div>
 
-                <!-- Quiz Card 2 -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <!-- Similar structure to Quiz Card 1 -->
-                </div>
+                @endforeach
 
-                <!-- Quiz Card 3 -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <!-- Similar structure to Quiz Card 1 -->
-                </div>
             </div>
         </main>
     </div>
+    <script>
+        async function share(slug) {
+            try {
+                slug = "<?php echo $_ENV['APP_URL']?>" + '/take-quiz/' + slug;
+                await navigator.clipboard.writeText(slug)
+                alert("Content copied to clipboard");  // toast qoshish kerak
+            } catch (err) {
+                console.error("Failed to copy: ", err);
+            }
+        }
+    </script>
 </div>
 <x-main.footer></x-main.footer>

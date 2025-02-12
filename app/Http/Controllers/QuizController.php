@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
@@ -28,7 +29,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        $validater = $request->validate([
+        $validator = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'timeLimit' => 'required|integer',
@@ -37,13 +38,23 @@ class QuizController extends Controller
 
         $quiz=Quiz::create([
             'user_id'=>auth()->id(),
-            'title' => $validater['title'],
-            'description' => $validater['description'],
-            'timeLimit' => $validater['timeLimit'],
+            'title' => $validator['title'],
+            'description' => $validator['description'],
+            'time_limit' => $validator['timeLimit'],
+            'slug'=>Str::slug(strtotime('now') . '/' .$request['title']),
         ]);
-//        foreach ($validater['questions'] as $question) {
-//            $quiz->questions()->create([]);
-//        }
+        foreach ($validator['questions'] as $question) {
+            $questionItem = $quiz->questions()->create([
+                'name'=>$question['quiz'],
+            ]);
+            foreach ($question['options'] as $optionKey=>$option) {
+               $questionItem->options()->create([
+                   'name'=>$option,
+                   'is_correct'=> $question['correct'] == $optionKey  ? 1 : 0,
+               ]);
+            }
+        }
+        return to_route('dashboard.quizzes');
     }
 
     /**

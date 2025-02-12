@@ -17,7 +17,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function(){
     Route::get('/statistics',[DashboardController::class,'statistics'])->middleware('auth')->name('dashboard.statistics');
 
     Route::get('/create-quiz',[QuizController::class,'create'])->middleware('auth')->name('dashboard.create-quiz');
-    Route::post('/create-quiz',[QuizController::class,'store'])->middleware('auth')->name('dashboard.create-quiz');
+    Route::post('/create-quiz',[QuizController::class,'store'])->middleware('auth')->name('store-quiz');
 });
 
 

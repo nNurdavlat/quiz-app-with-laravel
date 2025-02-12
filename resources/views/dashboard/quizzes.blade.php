@@ -84,7 +84,9 @@
                                 class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
                                 onclick="share('{{ $quiz->slug }}')"
                             >Share</button>
-                            <button class="text-red-600 hover:text-red-800">Delete</button>
+                            <form method="GET">
+                                <a href="{{ route('delete-quiz', ['quiz'=>$quiz->id]) }}" class="text-red-600 hover:text-red-800">Delete</a>
+                            </form>
                         </div>
                     </div>
 

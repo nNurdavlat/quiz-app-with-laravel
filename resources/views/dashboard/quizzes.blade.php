@@ -78,7 +78,7 @@
                             <span class="text-sm text-gray-500">75% Completion Rate</span>
                         </div>
                         <div class="flex justify-between">
-                            <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
+                            <a href="{{ route('dashboard.edit', ['quiz'=>$quiz->id]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
                             <button class="text-green-600 hover:text-green-800">View Results</button>
                             <button
                                 class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
@@ -96,9 +96,18 @@
     <script>
         async function share(slug) {
             try {
-                slug = "<?php echo $_ENV['APP_URL']?>" + '/take-quiz/' + slug;
-                await navigator.clipboard.writeText(slug)
-                alert("Content copied to clipboard");  // toast qoshish kerak
+                slug = '{{ env('APP_URL') }}' + '/take-quiz/' + slug;
+                await navigator.clipboard.writeText(slug);
+                // Brauzer Notification
+                if (Notification.permission === "granted") {
+                    new Notification("Success", { body: "Content copied to clipboard" });
+                } else if (Notification.permission !== "denied") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            new Notification("Success", { body: "Content copied to clipboard" });
+                        }
+                    });
+                }
             } catch (err) {
                 console.error("Failed to copy: ", err);
             }

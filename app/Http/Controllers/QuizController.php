@@ -13,7 +13,9 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.quizzes',[
+            'quizzes'=>Quiz::withCount('questions')->get()
+        ]);
     }
 
     /**
@@ -68,24 +70,60 @@ class QuizController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Quiz $quiz)
     {
-        //
+        return view('dashboard.edit-quiz',[
+                'quiz'=>$quiz
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Quiz $quiz)
     {
-        //
+        $validator = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
+                'timeLimit' => 'required|integer',
+                'questions' => 'required|array',
+        ]);
+
+
+        $quiz->title = $request['title'];
+        $quiz->description =$request['description'];
+        $quiz->time_limit = $request['timeLimit'];
+        $quiz->slug = Str::slug(strtotime('now') . '/' .  $request['title']);
+        $quiz->save();
+
+        $quiz->questions()->delete();
+        foreach ($validator['questions'] as $question) {
+            $questionItem = $quiz->questions()->create([
+               'name'=>$question['quiz'],
+            ]);
+            foreach ($question['options'] as $optionKey=>$option) {
+                $questionItem->options()->create([
+                   'name'=>$option,
+                    'is_correct'=>$question['correct'] == $optionKey ? 1 : 0,
+                ]);
+            }
+        }
+
+
+//        $quiz->update([
+//           'title'=>$request['title'],
+//            'description'=>$request['description'],
+//            'time_limit'=>$request['timeLimit'],
+//            'slug'=>Str::slug(strtotime('now') . '/' .  $request['title'])
+//        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+        return to_route('dashboard.quizzes');
     }
 }

@@ -58,31 +58,38 @@
                             <!-- Question Template -->
                             <div id="questionsContainer" class="space-y-6">
                                 <div class="p-4 border border-gray-200 rounded-lg" data-question-id="1">
-                                    <div>
-                                        <h3>1</h3>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700">Question Text</label>
-                                        <input name="questions[0][quiz]" type="text" required
-                                               class="w-full px-4 py-2 border rounded-lg mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    </div>
+                                    @foreach($quiz->questions as $question)
+                                        <div>
+                                            <h3>1</h3>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700">Question Text</label>
+                                            <input name="questions[0][quiz]" type="text" required
+                                                   value="{{ $question->name }}"
+                                                   class="w-full px-4 py-2 border rounded-lg mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        </div>
+                                        @foreach($question->options as $optionKey=>$option)
+                                            <div class="space-y-3" data-options-container>
+                                                <div class="flex justify-between">
+                                                    <p class="text-sm font-medium text-gray-700">Answer Options</p>
+                                                    <button type="button" class="addOptionBtn px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                                                        Add Option
+                                                    </button>
+                                                </div>
+                                                <!-- Option 1 -->
+                                                <div class="flex items-center gap-4">
+                                                    <input {{$option->is_correct ? 'checked' : '' }} type="radio" name="questions[0][correct]" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                                    <input type="text" name="questions[0][options][]" placeholder="Option 1" required
+                                                           value="{{ $option['name']}}"
+                                                           class="w-full px-4 py-2 border rounded-lg block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                                    <button type="button" class="removeOptionBtn px-2 py-1 text-red-600 hover:text-red-800">×</button>
+                                                </div>
+                                                <!-- Option 2 -->
+                                            </div>
+                                        @endforeach
+                                    @endforeach
 
-                                    <div class="space-y-3" data-options-container>
-                                        <div class="flex justify-between">
-                                            <p class="text-sm font-medium text-gray-700">Answer Options</p>
-                                            <button type="button" class="addOptionBtn px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
-                                                Add Option
-                                            </button>
-                                        </div>
-                                        <!-- Option 1 -->
-                                        <div class="flex items-center gap-4">
-                                            <input type="radio" name="questions[0][correct]" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                            <input type="text" name="questions[0][options][]" placeholder="Option 1" required
-                                                   class="w-full px-4 py-2 border rounded-lg block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                            <button type="button" class="removeOptionBtn px-2 py-1 text-red-600 hover:text-red-800">×</button>
-                                        </div>
-                                        <!-- Option 2 -->
-                                    </div>
+
 
                                     <div class="mt-4 flex justify-end">
                                         <button type="button" class="removeQuestionBtn text-red-600 hover:text-red-800 font-medium">

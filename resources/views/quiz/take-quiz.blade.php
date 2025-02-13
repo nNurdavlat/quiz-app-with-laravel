@@ -176,74 +176,7 @@
 
     // Initialize quiz
     let options = document.getElementById('options'),
-        questions = [
-            {
-                'id':1,
-                'question': 'What is the output of console.log(typeof undefined)?',
-                'options': [
-                    {
-                        'id':1,
-                        'option_text':'undefined'
-                    },
-                    {
-                        'id':2,
-                        'option_text':'object'
-                    },
-                    {
-                        'id':3,
-                        'option_text':'string'
-                    },
-                    {
-                        'id':4,
-                        'option_text':'null'
-                    }
-                ],
-            },
-            {
-                'id':2,
-                'question': 'What is the output of console.log(typeof null)?',
-                'options': [
-                    {
-                        'id':1,
-                        'option_text':'undefined'
-                    },
-                    {
-                        'id':2,
-                        'option_text':'object'
-                    },
-                    {
-                        'id':3,
-                        'option_text':'string'
-                    },
-                    {
-                        'id':4,
-                        'option_text':'null'
-                    }
-                ],
-            },
-            {
-                'id':3,
-                'question': 'What is the output of console.log(typeof {})?',
-                'options': [
-                    {
-                        'id':1,
-                        'option_text':'undefined'
-                    },
-                    {
-                        'id':2,
-                        'option_text':'object'
-                    },
-                    {
-                        'id':3,
-                        'option_text':'string'
-                    },
-                    {
-                        'id':4,
-                        'option_text':'null'
-                    }
-                ],
-            }
-        ],
+        questions = JSON.parse('<?php echo $quiz->toJson() ?>').questions,
         currentQuestionIndex = 0;
 
     function takeQuiz(index=0) {

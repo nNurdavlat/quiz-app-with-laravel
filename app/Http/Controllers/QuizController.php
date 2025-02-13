@@ -128,10 +128,11 @@ class QuizController extends Controller
         return to_route('dashboard.quizzes');
     }
 
-    public function takeQuiz(Quiz $quiz)
+    public function takeQuiz(string $slug)
     {
+        $quiz = Quiz::query()->where('slug', $slug)->with('questions.options')->first();
         return view('quiz.take-quiz',[
-            'quiz'=>$quiz->load('questions.options'),
+            'quiz'=>$quiz,
         ]);
     }
 }

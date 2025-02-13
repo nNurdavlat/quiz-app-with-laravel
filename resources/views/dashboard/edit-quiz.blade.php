@@ -68,14 +68,14 @@
                                                    value="{{ $question->name }}"
                                                    class="w-full px-4 py-2 border rounded-lg mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                         </div>
+                                        <div class="space-y-3" data-options-container>
+                                            <div class="flex justify-between">
+                                                <p class="text-sm font-medium text-gray-700">Answer Options</p>
+                                                <button type="button" class="addOptionBtn px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                                                    Add Option
+                                                </button>
+                                            </div>
                                         @foreach($question->options as $optionKey=>$option)
-                                            <div class="space-y-3" data-options-container>
-                                                <div class="flex justify-between">
-                                                    <p class="text-sm font-medium text-gray-700">Answer Options</p>
-                                                    <button type="button" class="addOptionBtn px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
-                                                        Add Option
-                                                    </button>
-                                                </div>
                                                 <!-- Option 1 -->
                                                 <div class="flex items-center gap-4">
                                                     <input {{$option->is_correct ? 'checked' : '' }} type="radio" name="questions[0][correct]" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
@@ -84,9 +84,8 @@
                                                            class="w-full px-4 py-2 border rounded-lg block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                                     <button type="button" class="removeOptionBtn px-2 py-1 text-red-600 hover:text-red-800">×</button>
                                                 </div>
-                                                <!-- Option 2 -->
-                                            </div>
                                         @endforeach
+                                        </div>
                                     @endforeach
 
 
@@ -104,7 +103,7 @@
                         <div class="flex justify-end">
                             <button type="submit"
                                     class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                Create Quiz
+                                Edit Quiz
                             </button>
                         </div>
                     </form>

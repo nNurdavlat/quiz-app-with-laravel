@@ -8,7 +8,6 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/',[HomeController::class,'welcome'])->name('welcome`');
 Route::get('/about',[HomeController::class,'about'])->name('about`');
-Route::get('/take-quiz',[QuizController::class,'takeQuiz'])->middleware('auth')->name('take-quiz`');
 
 // DASHBOARD
 Route::prefix('dashboard')->middleware('auth')->group(function(){
@@ -27,6 +26,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function(){
 });
 
 
+Route::get('/take-quiz/{slug}',[QuizController::class,'takeQuiz'])->middleware('auth')->name('take-quiz`');
 
 
 // Laravel routes

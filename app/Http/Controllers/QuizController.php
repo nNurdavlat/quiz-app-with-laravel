@@ -116,6 +116,7 @@ class QuizController extends Controller
 //            'time_limit'=>$request['timeLimit'],
 //            'slug'=>Str::slug(strtotime('now') . '/' .  $request['title'])
 //        ]);
+        return to_route('dashboard.quizzes');
     }
 
     /**
@@ -125,5 +126,12 @@ class QuizController extends Controller
     {
         $quiz->delete();
         return to_route('dashboard.quizzes');
+    }
+
+    public function takeQuiz(Quiz $quiz)
+    {
+        return view('quiz.take-quiz',[
+            'quiz'=>$quiz->load('questions.options'),
+        ]);
     }
 }

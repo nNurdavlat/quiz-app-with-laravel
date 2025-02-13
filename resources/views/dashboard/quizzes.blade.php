@@ -98,7 +98,7 @@
     <script>
         async function share(slug) {
             try {
-                slug = '{{ env('APP_URL') }}' + '/take-quiz/' + slug;
+                slug = '{{ url('/take-quiz/') }}/' + slug;
                 await navigator.clipboard.writeText(slug);
                 // Brauzer Notification
                 if (Notification.permission === "granted") {

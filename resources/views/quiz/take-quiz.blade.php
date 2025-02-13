@@ -28,7 +28,30 @@
 
 <!-- Main Content -->
 <main class="flex-grow container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6" id="questionContainer">
+    <div id="start-card" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="title">Quiz Title</h2>
+            <p class="text-xl text-gray-700 mb-6" id="description">Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit.
+                Accusamus delectus dolorum eligendi esse excepturi in quam qui veritatis voluptatibus?
+                Dolore.</p>
+
+            <div class="flex justify-center space-x-12 mb-8">
+                <div class="text-center">
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600" id="time-taken">5:00</p>
+                    <p class="text-gray-600">Time Limit</p>
+                </div>
+            </div>
+
+            <button id="start-btn"
+                    class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Start Quiz
+            </button>
+        </div>
+    </div>
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 hidden" id="questionContainer">
         <!-- Quiz Header -->
         <div class="flex justify-between items-center mb-6">
             <div>
@@ -132,6 +155,11 @@
 
 <!-- Quiz JavaScript -->
 <script>
+    let startBtn = document.getElementById('start-btn');
+    startBtn.onclick = () => {
+        document.getElementById('start-card').classList.add('hidden');
+        document.getElementById('questionContainer').classList.remove('hidden');
+    }
     // Timer functionality
     function startTimer(duration, display) {
         let timer = duration;

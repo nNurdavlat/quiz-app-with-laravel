@@ -14,8 +14,7 @@ class Quiz extends Model
         'time_limit',
     ];
 
-    public function questions()
-    {
+    public function questions(){
         return $this->hasMany(Question::class);
     }
 }

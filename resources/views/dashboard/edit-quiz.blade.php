@@ -1,11 +1,11 @@
 <x-main.header></x-main.header>
+@vite('resources/js/add-quiz.js')
 <body class="bg-gray-100">
 <div class="flex min-h-screen">
     <!-- Sidebar -->
     <x-dashboard.sidebar></x-dashboard.sidebar>
-
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
         <!-- Top Navigation -->
         <x-dashboard.navbar></x-dashboard.navbar>
 
@@ -57,8 +57,8 @@
 
                             <!-- Question Template -->
                             <div id="questionsContainer" class="space-y-6">
-                                <div class="p-4 border border-gray-200 rounded-lg" data-question-id="1">
-                                    @foreach($quiz->questions as $question)
+                                @foreach($quiz->questions as $questionKey => $question)
+                                    <div class="p-4 border border-gray-200 rounded-lg" data-question-id="1">
                                         <div>
                                             <h3>1</h3>
                                         </div>
@@ -68,6 +68,7 @@
                                                    value="{{ $question->name }}"
                                                    class="w-full px-4 py-2 border rounded-lg mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                         </div>
+
                                         <div class="space-y-3" data-options-container>
                                             <div class="flex justify-between">
                                                 <p class="text-sm font-medium text-gray-700">Answer Options</p>
@@ -75,27 +76,26 @@
                                                     Add Option
                                                 </button>
                                             </div>
-                                        @foreach($question->options as $optionKey=>$option)
-                                                <!-- Option 1 -->
+                                            <!-- Option 1 -->
+                                            @foreach($question->options as $optionKey => $option)
                                                 <div class="flex items-center gap-4">
-                                                    <input {{$option->is_correct ? 'checked' : '' }} type="radio" name="questions[0][correct]" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                                    <input type="text" name="questions[0][options][]" placeholder="Option 1" required
-                                                           value="{{ $option['name']}}"
+                                                    <input type="radio"
+                                                           {{ $option->is_correct ? 'checked' : ''}}
+                                                           name="questions[{{ $questionKey }}][correct]" value="{{ $optionKey }}" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                                    <input type="text" name="questions[{{ $questionKey }}][options][]" value="{{ $option->name }}" required
                                                            class="w-full px-4 py-2 border rounded-lg block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                                     <button type="button" class="removeOptionBtn px-2 py-1 text-red-600 hover:text-red-800">×</button>
                                                 </div>
-                                        @endforeach
+                                            @endforeach
                                         </div>
-                                    @endforeach
 
-
-
-                                    <div class="mt-4 flex justify-end">
-                                        <button type="button" class="removeQuestionBtn text-red-600 hover:text-red-800 font-medium">
-                                            Remove Question
-                                        </button>
+                                        <div class="mt-4 flex justify-end">
+                                            <button type="button" class="removeQuestionBtn text-red-600 hover:text-red-800 font-medium">
+                                                Remove Question
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -103,7 +103,7 @@
                         <div class="flex justify-end">
                             <button type="submit"
                                     class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                Edit Quiz
+                                Update Quiz
                             </button>
                         </div>
                     </form>

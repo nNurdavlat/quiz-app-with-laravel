@@ -3,9 +3,8 @@
 <div class="flex min-h-screen">
     <!-- Sidebar -->
     <x-dashboard.sidebar></x-dashboard.sidebar>
-
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
         <!-- Top Navigation -->
         <x-dashboard.navbar></x-dashboard.navbar>
 
@@ -15,9 +14,9 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">My Quizzes</h2>
                 <div class="flex space-x-4">
-                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                    <a href="{{ route('dashboard.create-quiz') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
                         Create New Quiz
-                    </button>
+                    </a>
                     <div class="flex border rounded-lg">
                         <button class="px-3 py-2 bg-white border-r">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -69,7 +68,7 @@
                         <p class="text-gray-600 mb-4">{{ $quiz->description }}</p>
                         <div class="flex justify-between items-center mb-4">
                             <span class="text-sm text-gray-500">{{ $quiz->questions_count }} Questions</span>
-                            <span class="text-sm text-gray-500">{{ $quiz->time_limit  }} minutes</span>
+                            <span class="text-sm text-gray-500">{{ $quiz->time_limit }} minutes</span>
                         </div>
                         <div class="mb-4">
                             <div class="w-full bg-gray-200 rounded-full h-2">
@@ -79,39 +78,28 @@
                         </div>
                         <div class="flex justify-between">
                             <a href="{{ route('dashboard.edit', ['quiz'=>$quiz->id]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
-                            <button class="text-green-600 hover:text-green-800">View Results</button>
                             <button
                                 class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
                                 onclick="share('{{ $quiz->slug }}')"
                             >Share</button>
-                            <form method="GET">
-                                <a href="{{ route('delete-quiz', ['quiz'=>$quiz->id]) }}" class="text-red-600 hover:text-red-800">Delete</a>
-                            </form>
+                            <a href="{{ route('delete-quiz', ['quiz'=>$quiz->id]) }}" class="text-red-600 hover:text-red-800">Delete</a>
                         </div>
                     </div>
-
                 @endforeach
-
+            </div>
+            <div class="my-3 flex items-center flex-col">
+                {{ $quizzes->links() }}
             </div>
         </main>
     </div>
     <script>
         async function share(slug) {
             try {
-                slug = '{{ url('/take-quiz/') }}/' + slug;
+                slug = '{{ url('/show-quiz/') }}/' + slug;
                 await navigator.clipboard.writeText(slug);
-                // Brauzer Notification
-                if (Notification.permission === "granted") {
-                    new Notification("Success", { body: "Content copied to clipboard" });
-                } else if (Notification.permission !== "denied") {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            new Notification("Success", { body: "Content copied to clipboard" });
-                        }
-                    });
-                }
+                alert('Content copied to clipboard');
             } catch (err) {
-                console.error("Failed to copy: ", err);
+                console.error('Failed to copy: ', err);
             }
         }
     </script>
